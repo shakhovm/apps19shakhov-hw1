@@ -10,6 +10,11 @@ public class TempSummaryStatistics {
     private double minTemp;
     private double maxTemp;
 
+    /*
+    Constructor
+    params: double, double, double,double
+
+     */
     public TempSummaryStatistics(double avgTemp,
                                  double devTemp,
                                  double minTemp,
@@ -22,15 +27,11 @@ public class TempSummaryStatistics {
 
     }
 
-    @Override
-    public String toString() {
-        return "TempSummaryStatistics{"
-                + "avgTemp=" + avgTemp
-                + ", devTemp=" + devTemp
-                + ", minTemp=" + minTemp
-                + ", maxTemp=" + maxTemp + '}';
-    }
-
+    /*
+    Compare two TSS
+    params: Object
+    return: boolean
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -50,6 +51,10 @@ public class TempSummaryStatistics {
                 && Double.compare(that.maxTemp, maxTemp) == 0;
     }
 
+    /*
+    Hash Code
+    return: int
+     */
     @Override
     public int hashCode() {
         return Objects.hash(avgTemp, devTemp, minTemp, maxTemp);

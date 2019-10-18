@@ -1,24 +1,33 @@
 package ua.edu.ucu.tempseries;
-
 import java.util.Arrays;
 import java.util.InputMismatchException;
 
-
-
-
+/*
+Class For Temperature Series Analysis Representation
+ */
 public class TemperatureSeriesAnalysis {
 
+    /*
+    The array of temperatures
+     */
     private double[] temperatureSeries;
 
+    /*
+    Default constructor
+     */
     public TemperatureSeriesAnalysis() {
         temperatureSeries = new double[0];
     }
 
-    public TemperatureSeriesAnalysis(double[] temperatureSeries) {
+    /*
+    Constructor
 
+    params: double[]
+     */
+    public TemperatureSeriesAnalysis(double[] temperatureSeries) {
+        int badNumber = -273;
         for (double temperature: temperatureSeries)
         {
-            int badNumber = -273;
 
             if (temperature < badNumber)
             {
@@ -31,6 +40,9 @@ public class TemperatureSeriesAnalysis {
                         temperatureSeries.length);
     }
 
+    /*
+    Error causer
+     */
     private void errorRaiser()
     {
         if (temperatureSeries.length == 0)
@@ -39,8 +51,13 @@ public class TemperatureSeriesAnalysis {
         }
     }
 
-    public double average() {
+    /*
+    Get Average number of temperatures
 
+    return: double
+     */
+    public double average() {
+        //if array is empty raise exception
         errorRaiser();
         double sum = 0.0;
         for (double temperature: temperatureSeries)
@@ -51,6 +68,11 @@ public class TemperatureSeriesAnalysis {
         return sum / temperatureSeries.length;
     }
 
+    /*
+    Get Deviation of temperatures
+
+    return: double
+     */
     public double deviation() {
         errorRaiser();
         double sigma = 0.0;
@@ -65,11 +87,16 @@ public class TemperatureSeriesAnalysis {
         return Math.sqrt(sigma/temperatureSeries.length);
     }
 
+    /*
+    Get Min of temperatures
+
+    return: double
+     */
     public double min() {
         errorRaiser();
         double minTemp = temperatureSeries[0];
         for (int i = 1; i < temperatureSeries.length; i++) {
-            if(temperatureSeries[i] < minTemp)
+            if (temperatureSeries[i] < minTemp)
             {
                 minTemp = temperatureSeries[i];
             }
@@ -78,6 +105,11 @@ public class TemperatureSeriesAnalysis {
         return minTemp;
     }
 
+    /*
+    Get Max of temperatures
+
+    return: double
+     */
     public double max() {
         if (temperatureSeries.length == 0)
         {
@@ -85,7 +117,7 @@ public class TemperatureSeriesAnalysis {
         }
         double maxTemp = temperatureSeries[0];
         for (int i = 1; i < temperatureSeries.length; i++) {
-            if(temperatureSeries[i] > maxTemp)
+            if (temperatureSeries[i] > maxTemp)
             {
                 maxTemp = temperatureSeries[i];
             }
@@ -94,18 +126,29 @@ public class TemperatureSeriesAnalysis {
         return maxTemp;
     }
 
-    public double findTempClosestToZero() {
+    /*
+    Get Temperature closest to zero
 
+    return: double
+     */
+    public double findTempClosestToZero() {
 
         return findTempClosestToValue(0.0);
     }
 
+    /*
+    Get Temperature closest to value
+
+    params: double
+    return: double
+     */
     public double findTempClosestToValue(double tempValue) {
         errorRaiser();
         double closestToValue = temperatureSeries[0];
 
         double delta = Math.abs(closestToValue - tempValue);
         for (int i = 1; i < temperatureSeries.length; i++) {
+            //if difference equals delta find max of the values
             if (Double.compare(Math.abs(temperatureSeries[i]
                     - tempValue), delta) == 0)
             {
@@ -121,11 +164,17 @@ public class TemperatureSeriesAnalysis {
         return closestToValue;
     }
 
+    /*
+    Get Array of temperatures Less Then certain temperature
+
+    params: double
+    return: double[]
+     */
     public double[] findTempsLessThen(double tempValue) {
         double[] tempsLessThen = new double[temperatureSeries.length];
         int i = 0;
         for (double temperature: temperatureSeries) {
-            if(temperature < tempValue)
+            if (temperature < tempValue)
             {
                 tempsLessThen[i++] = temperature;
             }
@@ -134,11 +183,17 @@ public class TemperatureSeriesAnalysis {
         return Arrays.copyOf(tempsLessThen, i);
     }
 
+    /*
+    Get Array of temperatures Greater Then certain temperature
+
+    params: double
+    return: double[]
+     */
     public double[] findTempsGreaterThen(double tempValue) {
         double[] tempsGreaterThen = new double[temperatureSeries.length];
         int i = 0;
         for (double temperature: temperatureSeries) {
-            if(temperature > tempValue)
+            if (temperature > tempValue)
             {
                 tempsGreaterThen[i++] = temperature;
             }
@@ -147,11 +202,23 @@ public class TemperatureSeriesAnalysis {
 
     }
 
+    /*
+    Get Temperature Summary Statistics
+
+
+    return: TempSummaryStatistics
+     */
     public TempSummaryStatistics summaryStatistics() {
         errorRaiser();
         return new TempSummaryStatistics(average(), deviation(), min(), max());
     }
 
+    /*
+    Add new temperatures to our array
+
+
+    return: int
+     */
     public int addTemps(double... temps) {
         double[] newTemps = new double[temperatureSeries.length + temps.length];
         int i = 0;
@@ -160,21 +227,21 @@ public class TemperatureSeriesAnalysis {
             newTemps[i++] = temperature;
         }
 
-
         for (double temperature: temps)
         {
             newTemps[i++] = temperature;
         }
 
-
         temperatureSeries = newTemps;
-
-
         return temperatureSeries.length;
     }
 
+    /*
+    return: double[]
+     */
     public double[] getTemperatureSeries() {
-        return temperatureSeries;
+        return Arrays.copyOf(temperatureSeries,
+                temperatureSeries.length);
     }
 
 }
