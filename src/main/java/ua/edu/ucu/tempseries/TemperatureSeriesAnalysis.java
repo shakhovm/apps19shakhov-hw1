@@ -13,6 +13,11 @@ public class TemperatureSeriesAnalysis {
     private double[] temperatureSeries;
 
     /*
+    Temperatures cannot be less then this
+     */
+    private final static double badTemp = -273;
+
+    /*
     Default constructor
      */
     public TemperatureSeriesAnalysis() {
@@ -28,11 +33,11 @@ public class TemperatureSeriesAnalysis {
     params: double[]
      */
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
-        int badNumber = -273;
+
         for (double temperature: temperatureSeries)
         {
 
-            if (temperature < badNumber)
+            if (temperature < badTemp)
             {
                 throw new InputMismatchException();
             }
@@ -126,7 +131,7 @@ public class TemperatureSeriesAnalysis {
     return: double
      */
     public double max() {
-        return findValueByComparing((a, b) -> a < b);
+        return findValueByComparing((a, b) -> a > b);
     }
 
     /*
