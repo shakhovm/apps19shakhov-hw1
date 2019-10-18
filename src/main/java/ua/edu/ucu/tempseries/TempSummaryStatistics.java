@@ -1,6 +1,8 @@
 package ua.edu.ucu.tempseries;
 
 
+import java.util.Objects;
+
 public class TempSummaryStatistics {
 
     private double avgTemp;
@@ -31,12 +33,12 @@ public class TempSummaryStatistics {
 
     @Override
     public boolean equals(Object o) {
-        if(this == o)
+        if (this == o)
         {
             return true;
         }
 
-        if(o == null || getClass() != o.getClass())
+        if (o == null || getClass() != o.getClass())
         {
             return false;
         }
@@ -48,4 +50,8 @@ public class TempSummaryStatistics {
                 && Double.compare(that.maxTemp, maxTemp) == 0;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(avgTemp, devTemp, minTemp, maxTemp);
+    }
 }

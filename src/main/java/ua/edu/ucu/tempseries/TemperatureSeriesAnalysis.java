@@ -16,11 +16,11 @@ public class TemperatureSeriesAnalysis {
 
     public TemperatureSeriesAnalysis(double[] temperatureSeries) {
 
-        for(double temperature: temperatureSeries)
+        for (double temperature: temperatureSeries)
         {
             int badNumber = -273;
 
-            if(temperature < badNumber)
+            if (temperature < badNumber)
             {
                 throw new InputMismatchException();
             }
@@ -33,7 +33,7 @@ public class TemperatureSeriesAnalysis {
 
     private void errorRaiser()
     {
-        if(temperatureSeries.length == 0)
+        if (temperatureSeries.length == 0)
         {
             throw new IllegalArgumentException();
         }
@@ -43,7 +43,7 @@ public class TemperatureSeriesAnalysis {
 
         errorRaiser();
         double sum = 0.0;
-        for(double temperature: temperatureSeries)
+        for (double temperature: temperatureSeries)
         {
             sum += temperature;
         }
@@ -55,9 +55,10 @@ public class TemperatureSeriesAnalysis {
         errorRaiser();
         double sigma = 0.0;
         double averageTemperature = average();
-        for(double temperature: temperatureSeries)
+        for (double temperature: temperatureSeries)
         {
-            sigma += (temperature - averageTemperature)*(temperature - averageTemperature);
+            sigma += (temperature - averageTemperature)
+                    *(temperature - averageTemperature);
 
         }
 
@@ -67,7 +68,7 @@ public class TemperatureSeriesAnalysis {
     public double min() {
         errorRaiser();
         double minTemp = temperatureSeries[0];
-        for(int i = 1; i < temperatureSeries.length; i++) {
+        for (int i = 1; i < temperatureSeries.length; i++) {
             if(temperatureSeries[i] < minTemp)
             {
                 minTemp = temperatureSeries[i];
@@ -78,12 +79,12 @@ public class TemperatureSeriesAnalysis {
     }
 
     public double max() {
-        if(temperatureSeries.length == 0)
+        if (temperatureSeries.length == 0)
         {
             throw new IllegalArgumentException();
         }
         double maxTemp = temperatureSeries[0];
-        for(int i = 1; i < temperatureSeries.length; i++) {
+        for (int i = 1; i < temperatureSeries.length; i++) {
             if(temperatureSeries[i] > maxTemp)
             {
                 maxTemp = temperatureSeries[i];
@@ -105,13 +106,13 @@ public class TemperatureSeriesAnalysis {
 
         double delta = Math.abs(closestToValue - tempValue);
         for (int i = 1; i < temperatureSeries.length; i++) {
-            if(Double.compare(Math.abs(temperatureSeries[i]
+            if (Double.compare(Math.abs(temperatureSeries[i]
                     - tempValue), delta) == 0)
             {
                 closestToValue = Math.max(temperatureSeries[i], closestToValue);
 
             }
-            else if(Math.abs(temperatureSeries[i] - tempValue) < delta)
+            else if (Math.abs(temperatureSeries[i] - tempValue) < delta)
             {
                 closestToValue = temperatureSeries[i];
                 delta = Math.abs(closestToValue - tempValue);
@@ -123,7 +124,7 @@ public class TemperatureSeriesAnalysis {
     public double[] findTempsLessThen(double tempValue) {
         double[] tempsLessThen = new double[temperatureSeries.length];
         int i = 0;
-        for(double temperature: temperatureSeries) {
+        for (double temperature: temperatureSeries) {
             if(temperature < tempValue)
             {
                 tempsLessThen[i++] = temperature;
@@ -136,7 +137,7 @@ public class TemperatureSeriesAnalysis {
     public double[] findTempsGreaterThen(double tempValue) {
         double[] tempsGreaterThen = new double[temperatureSeries.length];
         int i = 0;
-        for(double temperature: temperatureSeries) {
+        for (double temperature: temperatureSeries) {
             if(temperature > tempValue)
             {
                 tempsGreaterThen[i++] = temperature;
@@ -154,13 +155,13 @@ public class TemperatureSeriesAnalysis {
     public int addTemps(double... temps) {
         double[] newTemps = new double[temperatureSeries.length + temps.length];
         int i = 0;
-        for(double temperature: temperatureSeries)
+        for (double temperature: temperatureSeries)
         {
             newTemps[i++] = temperature;
         }
 
 
-        for(double temperature: temps)
+        for (double temperature: temps)
         {
             newTemps[i++] = temperature;
         }
