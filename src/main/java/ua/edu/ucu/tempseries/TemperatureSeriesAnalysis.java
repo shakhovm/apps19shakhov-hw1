@@ -18,13 +18,17 @@ public class TemperatureSeriesAnalysis {
 
         for(double temperature: temperatureSeries)
         {
-            if(temperature < -273)
+            int badNumber = -273;
+
+            if(temperature < badNumber)
             {
                 throw new InputMismatchException();
             }
         }
 
-        this.temperatureSeries = Arrays.copyOf(temperatureSeries, temperatureSeries.length);
+        this.temperatureSeries =
+                Arrays.copyOf(temperatureSeries,
+                        temperatureSeries.length);
     }
 
     private void errorRaiser()
@@ -53,7 +57,7 @@ public class TemperatureSeriesAnalysis {
         double averageTemperature = average();
         for(double temperature: temperatureSeries)
         {
-            sigma += Math.pow((temperature - averageTemperature), 2);
+            sigma += (temperature - averageTemperature)*(temperature - averageTemperature);
 
         }
 
@@ -62,15 +66,15 @@ public class TemperatureSeriesAnalysis {
 
     public double min() {
         errorRaiser();
-        double min_temp = temperatureSeries[0];
-        for (int i = 1; i < temperatureSeries.length; i++) {
-            if(temperatureSeries[i] < min_temp)
+        double minTemp = temperatureSeries[0];
+        for(int i = 1; i < temperatureSeries.length; i++) {
+            if(temperatureSeries[i] < minTemp)
             {
-                min_temp = temperatureSeries[i];
+                minTemp = temperatureSeries[i];
             }
         }
 
-        return min_temp;
+        return minTemp;
     }
 
     public double max() {
@@ -78,15 +82,15 @@ public class TemperatureSeriesAnalysis {
         {
             throw new IllegalArgumentException();
         }
-        double max_temp = temperatureSeries[0];
-        for (int i = 1; i < temperatureSeries.length; i++) {
-            if(temperatureSeries[i] > max_temp)
+        double maxTemp = temperatureSeries[0];
+        for(int i = 1; i < temperatureSeries.length; i++) {
+            if(temperatureSeries[i] > maxTemp)
             {
-                max_temp = temperatureSeries[i];
+                maxTemp = temperatureSeries[i];
             }
         }
 
-        return max_temp;
+        return maxTemp;
     }
 
     public double findTempClosestToZero() {
@@ -118,7 +122,7 @@ public class TemperatureSeriesAnalysis {
     public double[] findTempsLessThen(double tempValue) {
         double[] tempsLessThen = new double[temperatureSeries.length];
         int i = 0;
-        for (double temperature: temperatureSeries) {
+        for(double temperature: temperatureSeries) {
             if(temperature < tempValue)
             {
                 tempsLessThen[i++] = temperature;
@@ -131,7 +135,7 @@ public class TemperatureSeriesAnalysis {
     public double[] findTempsGreaterThen(double tempValue) {
         double[] tempsGreaterThen = new double[temperatureSeries.length];
         int i = 0;
-        for (double temperature: temperatureSeries) {
+        for(double temperature: temperatureSeries) {
             if(temperature > tempValue)
             {
                 tempsGreaterThen[i++] = temperature;
@@ -171,7 +175,4 @@ public class TemperatureSeriesAnalysis {
         return temperatureSeries;
     }
 
-    public void setTemperatureSeries(double[] temperatureSeries) {
-        this.temperatureSeries = temperatureSeries;
-    }
 }
