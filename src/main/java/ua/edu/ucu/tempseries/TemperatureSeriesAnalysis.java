@@ -19,6 +19,9 @@ public class TemperatureSeriesAnalysis {
         temperatureSeries = new double[0];
     }
 
+    private interface CompareTwoDoubles {
+        boolean compare(double a, double b);
+    }
     /*
     Constructor
 
@@ -39,6 +42,7 @@ public class TemperatureSeriesAnalysis {
                 Arrays.copyOf(temperatureSeries,
                         temperatureSeries.length);
     }
+
 
     /*
     Error causer
@@ -88,21 +92,32 @@ public class TemperatureSeriesAnalysis {
     }
 
     /*
+
+    Return temp by comparing with other temps
+    params: CompareTwoDoubles
+    return: double
+     */
+    private double findValueByComparing(CompareTwoDoubles comparator)
+    {
+        errorRaiser();
+        double value = temperatureSeries[0];
+        for (int i = 1; i < temperatureSeries.length; i++) {
+            if (comparator.compare(temperatureSeries[i], value))
+            {
+                value = temperatureSeries[i];
+            }
+        }
+
+        return value;
+    }
+
+    /*
     Get Min of temperatures
 
     return: double
      */
     public double min() {
-        errorRaiser();
-        double minTemp = temperatureSeries[0];
-        for (int i = 1; i < temperatureSeries.length; i++) {
-            if (temperatureSeries[i] < minTemp)
-            {
-                minTemp = temperatureSeries[i];
-            }
-        }
-
-        return minTemp;
+        return findValueByComparing((a, b) -> a < b);
     }
 
     /*
@@ -111,19 +126,7 @@ public class TemperatureSeriesAnalysis {
     return: double
      */
     public double max() {
-        if (temperatureSeries.length == 0)
-        {
-            throw new IllegalArgumentException();
-        }
-        double maxTemp = temperatureSeries[0];
-        for (int i = 1; i < temperatureSeries.length; i++) {
-            if (temperatureSeries[i] > maxTemp)
-            {
-                maxTemp = temperatureSeries[i];
-            }
-        }
-
-        return maxTemp;
+        return findValueByComparing((a, b) -> a < b);
     }
 
     /*
@@ -165,22 +168,35 @@ public class TemperatureSeriesAnalysis {
     }
 
     /*
+    Get Array of temperatures by comparing with certain temperature
+
+    params: double
+    return: double[]
+     */
+    public double[] findTempsByComparing(
+            CompareTwoDoubles comparator,
+            double tempValue)
+    {
+        double[] newTemps = new double[temperatureSeries.length];
+        int i = 0;
+        for (double temperature: temperatureSeries) {
+            if (comparator.compare(temperature, tempValue))
+            {
+                newTemps[i++] = temperature;
+            }
+        }
+
+        return Arrays.copyOf(newTemps, i);
+    }
+
+    /*
     Get Array of temperatures Less Then certain temperature
 
     params: double
     return: double[]
      */
     public double[] findTempsLessThen(double tempValue) {
-        double[] tempsLessThen = new double[temperatureSeries.length];
-        int i = 0;
-        for (double temperature: temperatureSeries) {
-            if (temperature < tempValue)
-            {
-                tempsLessThen[i++] = temperature;
-            }
-        }
-
-        return Arrays.copyOf(tempsLessThen, i);
+        return findTempsByComparing((a, b) -> a < b, tempValue);
     }
 
     /*
@@ -190,16 +206,7 @@ public class TemperatureSeriesAnalysis {
     return: double[]
      */
     public double[] findTempsGreaterThen(double tempValue) {
-        double[] tempsGreaterThen = new double[temperatureSeries.length];
-        int i = 0;
-        for (double temperature: temperatureSeries) {
-            if (temperature > tempValue)
-            {
-                tempsGreaterThen[i++] = temperature;
-            }
-        }
-        return Arrays.copyOf(tempsGreaterThen, i);
-
+        return findTempsByComparing((a, b) -> a > b, tempValue);
     }
 
     /*
