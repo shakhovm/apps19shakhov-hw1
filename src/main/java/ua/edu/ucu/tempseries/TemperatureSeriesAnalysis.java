@@ -105,7 +105,8 @@ public class TemperatureSeriesAnalysis {
 
         double delta = Math.abs(closestToValue - tempValue);
         for (int i = 1; i < temperatureSeries.length; i++) {
-            if(Math.abs(temperatureSeries[i] - tempValue) == delta)
+            if(Double.compare(Math.abs(temperatureSeries[i]
+                    - tempValue), delta) == 0)
             {
                 closestToValue = Math.max(temperatureSeries[i], closestToValue);
 
