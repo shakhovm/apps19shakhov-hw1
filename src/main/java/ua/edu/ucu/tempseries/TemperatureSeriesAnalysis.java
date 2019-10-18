@@ -15,7 +15,7 @@ public class TemperatureSeriesAnalysis {
     /*
     Temperatures cannot be less then this
      */
-    private final static double badTemp = -273;
+    private static final double BAD_TEMP = -273;
 
     /*
     Default constructor
@@ -37,7 +37,7 @@ public class TemperatureSeriesAnalysis {
         for (double temperature: temperatureSeries)
         {
 
-            if (temperature < badTemp)
+            if (temperature < BAD_TEMP)
             {
                 throw new InputMismatchException();
             }
